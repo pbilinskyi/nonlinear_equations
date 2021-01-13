@@ -30,7 +30,7 @@ double iterative_process_fixed(double x_0, double n_apr){
     return x_next;
 }
 
-double iterative_process_Newton_mod(double x_0, double n_max){
+double iterative_process_Newton_mod(double x_0, double n_apr){
 
     double x_prev = x_0;
     double x_next = x_0;
@@ -39,7 +39,7 @@ double iterative_process_Newton_mod(double x_0, double n_max){
     bool flag = true;
 
     std::cout << " n         x_n         |x_n - x_n-1|        f(x_n)" << std::endl;
-    while ((n < n_max) && ((err > eps) || (std::abs(f(x_prev)) > eps))){
+    while ((n < n_apr) || ((err > eps) || (std::abs(f(x_prev)) > eps))){
         ++n;
         x_next = x_prev - f(x_prev)/f_der(x_prev);
         err = std::abs(x_next - x_prev);
@@ -91,18 +91,15 @@ int main() {
     int n_apr = 27; // CHANGE THIS NUMBER!
     double x_fixed = iterative_process_fixed(a, n_apr);
     printf("%.10f\n", x_fixed);
-//    std::cout << "x = " << x_fixed << std::endl;
 
     std::cout << "==Newton modified========" << std::endl;
-    double x_newton_mod  = iterative_process_Newton_mod(a, 100);
+    n_apr = 27; // CHANGE THIS NUMBER!
+    double x_newton_mod  = iterative_process_Newton_mod(a, n_apr);
     printf("%.10f\n", x_newton_mod);
-//    std::cout << "x = " << x_newton_mod << std::endl;
 
     std::cout << "==Hordes=================" << std::endl;
     double x_hord  = iterative_process_hordes(a, (a + b)/2, 100);
     printf("%.10f\n", x_hord);
-
-//    std::cout << "x = " << x_fixed << std::endl;
 
     return 0;
 }
